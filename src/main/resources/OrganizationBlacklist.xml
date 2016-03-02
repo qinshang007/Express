@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap>
+	<typeAlias alias="organizationblacklist" type="com.express.bean.OrganizationBlacklist" />
+
+	<!-- 获得全查询列表 -->
+	<select id="getOrganizationBlackList" resultClass="organizationblacklist">
+		select * from organizationblacklist
+	</select>
+
+	<!-- 根据姓名获得黑名单对象 -->
+	<select id="getOrganizationByName" parameterClass="String"
+		resultClass="organizationblacklist">
+		select * from organizationblacklist where organizationname = #organizationname#
+	</select>
+	
+	<!-- 根据userid获得黑名单对象 -->
+	<select id="getOrganizationByUserid" parameterClass="String"
+		resultClass="organizationblacklist">
+		select * from organizationblacklist where organizationid = #organizationid#
+	</select>
+
+	<insert id="addOrganizationBlackList" parameterClass="organizationblacklist">
+		insert into organizationblacklist (organizationid,organizationname,crtime) values(#organizationid#,#organizationname#,#crtime#)
+		<selectKey resultClass="String" keyProperty="organizationid">  
+  		 	 SELECT @@IDENTITY as organizationid  
+ 		 </selectKey> 
+	</insert>
+	
+	<update id="updateOrganizationBlackList" parameterClass="organizationblacklist">
+		update organizationblacklist set organizationname=#organizationname#,crtime=#crtime# where organizationid = #organizationid#
+	</update>
+	
+	<delete id="deleteOrganizationBlacklist" parameterClass="String">
+		delete from organizationblacklist where organizationid=#organizationid#
+	</delete>
+
+</sqlMap> 

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap>
+	<typeAlias alias="mercblacklist" type="com.express.bean.MercBlacklist" />
+
+	<!-- 获得全查询列表 -->
+	<select id="getMercBlackList" resultClass="mercblacklist">
+		select * from mercblacklist
+	</select>
+
+	<!-- 根据姓名获得黑名单对象 -->
+	<select id="getMercByName" parameterClass="String"
+		resultClass="mercblacklist">
+		select * from mercblacklist where mercname = #mercname#
+	</select>
+	
+	<!-- 根据userid获得黑名单对象 -->
+	<select id="getMercByUserid" parameterClass="String"
+		resultClass="mercblacklist">
+		select * from mercblacklist where mercid = #mercid#
+	</select>
+
+	<insert id="addMercBlackList" parameterClass="mercblacklist">
+		insert into mercblacklist (mercid,mercname,crtime) values(#mercid#,#mercname#,#crtime#)
+		<selectKey resultClass="String" keyProperty="mercid">  
+  		 	 SELECT @@IDENTITY as mercid  
+ 		 </selectKey> 
+	</insert>
+	
+	<update id="updateMercBlackList" parameterClass="mercblacklist">
+		update mercblacklist set mercname=#mercname#,crtime=#crtime# where mercid = #mercid#
+	</update>
+	
+	<delete id="deleteMercBlacklist" parameterClass="String">
+		delete from mercblacklist where mercid=#mercid#
+	</delete>
+
+</sqlMap> 

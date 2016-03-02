@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMapConfig  
+    PUBLIC "-//iBATIS.com//DTD SQL Map Config 2.0//EN"  
+    "http://www.ibatis.com/dtd/sql-map-config-2.dtd">  
+<sqlMapConfig>
+  <sqlMap  resource ="User.xml" />
+  <sqlMap  resource ="News.xml" />
+  <sqlMap  resource ="Company.xml" />
+  <sqlMap  resource ="UserBlacklist.xml" />
+  <sqlMap  resource ="MercBlacklist.xml" />
+  <sqlMap  resource ="OrganizationBlacklist.xml" />
+  <sqlMap  resource ="RollingPicture.xml" />
+  <sqlMap  resource ="StaticPicture.xml" />
+  <sqlMap  resource ="Downloadzone.xml" />
+  <sqlMap  resource ="Advertisement.xml" />
+</sqlMapConfig>

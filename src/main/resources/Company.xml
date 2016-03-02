@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap>
+	<typeAlias alias="company" type="com.express.bean.Company" />
+
+	<!-- 获得全查询列表 -->
+	<select id="getCompanyList" resultClass="company">
+		select * from company order by level desc
+	</select>
+
+	<!-- 根据公司名获得公司对象 -->
+	<select id="getByCompanyName" parameterClass="String"
+		resultClass="company">
+		select * from company where compname = #compname#
+	</select>
+
+	<!-- 根据公司id获得公司对象 -->
+	<select id="getByCompanyId" parameterClass="String"
+		resultClass="company">
+		select * from company where compid = #compid#
+	</select>
+
+	<insert id="addCompany" parameterClass="company">
+		insert into company(compid,compname,address,tel,principal,crtime,pcompid,level) values(#compid#,#compname#,#address#,#tel#,#principal#,#crtime#,#pcompid#,#level#)
+		<selectKey resultClass="String" keyProperty="compid">  
+  		 	 SELECT @@IDENTITY as compid  
+ 		 </selectKey> 
+	</insert>
+	
+	<update id="updateCompany" parameterClass="company">
+		update company set compname=#compname#,address=#address#,tel=#tel#,principal=#principal#,crtime=#crtime#,pcompid=#pcompid#,level=#level# where compid=#compid#
+	</update>
+	
+	
+	<!-- 根据主公司id获取子公司信息列表 -->
+	<select id="getSubcompanyListByCompId" parameterClass="String" resultClass="company">
+		select * from company where pcompid = #compid# order by compname
+	</select>
+	
+	<!-- 根据主公司id获取子公司信息列表 -->
+	<select id="getMainCompanyList"  parameterClass="String"  resultClass="company">
+		select * from company where isnull(pcompid) and level = 2 order by compname
+	</select>
+	
+	<delete id="deleteComp" parameterClass="String">
+		delete from company where compid = #compid#
+	</delete>
+
+</sqlMap> 

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap>
+	<typeAlias alias="downloadzone" type="com.express.bean.Downloadzone" />
+
+	<!-- 获得全查询列表 -->
+	<select id="getFileList" resultClass="downloadzone">
+		select * from downloadzone order by level
+	</select>
+
+	<!-- 根据用户名获得用户对象 -->
+	<select id="getDownloadzoneById" parameterClass="String"
+		resultClass="downloadzone">
+		select * from downloadzone where id = #id#
+	</select>
+
+	<insert id="addDownloadzone" parameterClass="downloadzone">
+		insert into downloadzone (id,filesrc,filename,level,crtime) values(#id#,#filesrc#,#filename#,#level#,#crtime#)
+		<selectKey resultClass="String" keyProperty="id">  
+  		 	 SELECT @@IDENTITY as id  
+ 		 </selectKey> 
+	</insert>
+	
+	<update id="updateDownloadzone" parameterClass="downloadzone">
+		update downloadzone set filesrc=#filesrc#,filename=#filename#,level=#level#,crtime=#crtime# where id=#id#
+	</update>
+	
+	<delete id="deleteDownloadzone" parameterClass="String">
+		delete from downloadzone where id = #id#
+	</delete>
+
+</sqlMap>  

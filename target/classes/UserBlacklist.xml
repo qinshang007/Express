@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap>
+	<typeAlias alias="userblacklist" type="com.express.bean.UserBlacklist" />
+
+	<!-- 获得全查询列表 -->
+	<select id="getBlackList" resultClass="userblacklist">
+		select * from userblacklist
+	</select>
+
+	<!-- 根据姓名获得黑名单对象 -->
+	<select id="getByName" parameterClass="String"
+		resultClass="userblacklist">
+		select * from userblacklist where name = #name#
+	</select>
+	
+	<!-- 根据userid获得黑名单对象 -->
+	<select id="getByUserid" parameterClass="String"
+		resultClass="userblacklist">
+		select * from userblacklist where userid = #userid#
+	</select>
+
+	<insert id="addBlackList" parameterClass="userblacklist">
+		insert into userblacklist (userid,name,compname,crtime) values(#userid#,#name#,#compname#,#crtime#)
+		<selectKey resultClass="String" keyProperty="userid">  
+  		 	 SELECT @@IDENTITY as userid  
+ 		 </selectKey> 
+	</insert>
+	
+	<update id="updateBlackList" parameterClass="userblacklist">
+		update userblacklist set compname=#compname#,crtime=#crtime#,name=#name# where userid = #userid#
+	</update>
+	
+	<delete id="deleteBlacklist" parameterClass="String">
+		delete from userblacklist where userid=#userid#
+	</delete>
+
+</sqlMap> 

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap>
+	<typeAlias alias="user" type="com.express.bean.User" />
+	<typeAlias alias="userQuery" type="com.express.query.UserQuery" />
+
+	<!-- 获得全查询列表 -->
+	<select id="getUserList" resultClass="user">
+		select * from user
+	</select>
+
+	<!-- 根据用户名获得用户对象 -->
+	<select id="getUserByUserName" parameterClass="String"
+		resultClass="user">
+		select * from user where username = #username#
+	</select>
+
+	<!-- 根据id获得用户对象 -->
+	<select id="getUserByUserId" parameterClass="String"
+		resultClass="user">
+		select * from user where userid = #userid#
+	</select>
+
+	<insert id="addUser" parameterClass="user">
+		insert into user (userid,compid,username,passwd,phone,linkman,level,restime,company) values(#userid#,#compid#,#username#,#passwd#,#phone#,#linkman#,#level#,#restime#,#company#)
+		<selectKey resultClass="String" keyProperty="userid">  
+  		 	 SELECT @@IDENTITY as userid  
+ 		 </selectKey> 
+	</insert>
+	
+	<update id="updateUser" parameterClass="user">
+		update user set compid=#compid#,username=#username#,passwd=#passwd#, phone=#phone#, linkman=#linkman#,level=#level#,company=#company# where userid=#userid#
+	</update>
+	
+	<!-- 根据用户权限获得群发短信列表 -->
+	<select id="getMessageListbyCompId"  parameterClass="String" resultClass="user">
+		select * from user where compid = #compid#
+	</select>
+	
+	<delete id="deleteUser" parameterClass="String">
+		delete from user where userid = #userid#
+	</delete>
+	
+	<!-- 根据用户名密码获取userid -->
+	<select id="getUserIdbyLogin"  parameterClass="userQuery" resultClass="String">
+		select userid from user where username = #username# and passwd = #passwd#
+	</select>
+	
+	<!-- 根据userid获取用户权限 -->
+	<select id="getLevelByUserid" parameterClass="String" resultClass="int">
+		select level from user where userid=#userid#
+	</select>
+
+</sqlMap>  

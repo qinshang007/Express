@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap>
+	<typeAlias alias="staticpicture" type="com.express.bean.StaticPicture" />
+
+	<!-- 获得全查询列表 -->
+	<select id="getPicturetList" resultClass="staticpicture">
+		select * from staticpicture
+	</select>
+
+	<!-- 根据用户名获得用户对象 -->
+	<select id="getStaticPictureById" parameterClass="String"
+		resultClass="staticpicture">
+		select * from staticpicture where id = #id#
+	</select>
+
+	<insert id="addStaticPicture" parameterClass="staticpicture">
+		insert into staticpicture (id,picturesrc,description,crtime) values(#id#,#picturesrc#,#description#,#crtime#)
+		<selectKey resultClass="String" keyProperty="id">  
+  		 	 SELECT @@IDENTITY as id  
+ 		 </selectKey> 
+	</insert>
+	
+	<update id="updateStaticPicture" parameterClass="staticpicture">
+		update staticpicture set picturesrc=#picturesrc#,description=#description#,crtime=#crtime# where id=#id#
+	</update>
+	
+	<delete id="deleteStaticPicture" parameterClass="String">
+		delete from staticpicture where id = #id#
+	</delete>
+
+</sqlMap>  

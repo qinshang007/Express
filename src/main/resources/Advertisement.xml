@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap>
+	<typeAlias alias="advertisement" type="com.express.bean.Advertisement" />
+
+	<!-- 获得广告列表 -->
+	<select id="getAdvertisementList" resultClass="advertisement">
+		select * from advertisement order by crtime desc limit 4
+	</select>
+
+	<!-- 添加广告 -->
+	<insert id="addAdvertisement" parameterClass="advertisement">
+		insert into advertisement(pic,link) values(#pic#,#link#)
+		<selectKey resultClass="String" keyProperty="id">  
+  		 	 SELECT @@IDENTITY as id  
+ 		 </selectKey> 
+	</insert>
+	
+	<!-- 更新广告 -->
+	<update id="updateAdvertisement" parameterClass="advertisement">
+		update advertisement set pic=#pic#,link=#link#,crtime=#crtime# where id=#id#
+	</update>
+	
+	<!-- 根据id获取广告 -->
+	<select id="getAdvertisementById" parameterClass="int" resultClass="advertisement">
+		select * from advertisement where id = #id#
+	</select>
+	
+	<!-- 删除广告 -->
+	<delete id="deleteAdvertisement" parameterClass="int">
+		delete from advertisement where id = #id#
+	</delete>
+
+</sqlMap> 

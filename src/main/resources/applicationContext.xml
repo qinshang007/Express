@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+http://www.springframework.org/schema/context
+http://www.springframework.org/schema/context/spring-context-2.5.xsd">
+
+	<context:annotation-config />
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<property name="url" value="jdbc:mysql://localhost:3306/express" />
+		<property name="username" value="root" />
+		<property name="password" value="1234" />
+	</bean>
+
+	<bean id="sqlMapClient" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+		<!-- 此处应注入ibatis配置文件，而非sqlMap文件，否则会出现“there is no statement.....异常” -->
+		<property name="configLocation" value="sqlMapConfig.xml" />
+	</bean>
+
+	<bean id="userDao" class="com.express.daoImp.UserDaoImp">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+	</bean>
+
+	<bean id="newsDao" class="com.express.daoImp.NewsDaoImp">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+	</bean>
+	
+	<bean id="companyDao" class="com.express.daoImp.CompanyDaoImp">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+	</bean>
+	
+	<bean id="userBlacklistDao" class="com.express.daoImp.UserBlacklistDaoImp">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+	</bean>
+	
+	<bean id="mercBlacklistDao" class="com.express.daoImp.MercBlacklistDaoImp">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+	</bean>
+	
+	<bean id="organizationBlacklistDao" class="com.express.daoImp.OrganizationBlacklistDaoImp">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+	</bean>
+	
+	<bean id="rollingpictureDao" class="com.express.daoImp.RollingPictureDaoImp">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+	</bean>
+	
+	<bean id="staticpictureDao" class="com.express.daoImp.StaticPictureDaoImp">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+	</bean>
+	
+	<bean id="downloadzoneDao" class="com.express.daoImp.DownloadzoneDaoImp">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+	</bean>
+
+	<bean id="advertisementDao" class="com.express.daoImp.AdvertisementDaoImp">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+	</bean>
+	
+	<bean id="sysConfig" class="com.express.bean.SysConfig">
+		<property name="rootPath" value="D:/apache-tomcat-8080/webapps/epUpload" />
+	</bean>
+	
+</beans>

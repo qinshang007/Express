@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap>
+	<typeAlias alias="rollingpicture" type="com.express.bean.RollingPicture" />
+
+	<!-- 获得全查询列表 -->
+	<select id="getListBySequence" resultClass="rollingpicture">
+		select * from rollingpicture order by sequence
+	</select>
+
+	<!-- 根据用户名获得用户对象 -->
+	<select id="getById" parameterClass="String"
+		resultClass="rollingpicture">
+		select * from rollingpicture where id = #id#
+	</select>
+
+	<insert id="addRollingPicture" parameterClass="rollingpicture">
+		insert into rollingpicture (id,title,link,filesrc,sequence,crtime) values(#id#,#title#,#link#,#filesrc#,#sequence#,#crtime#)
+		<selectKey resultClass="String" keyProperty="id">  
+  		 	 SELECT @@IDENTITY as id  
+ 		 </selectKey> 
+	</insert>
+	
+	<update id="updateRollingPicture" parameterClass="rollingpicture">
+		update rollingpicture set title=#title#,link=#link#, filesrc=#filesrc#, sequence=#sequence#,crtime=#crtime# where id=#id#
+	</update>
+	
+	<delete id="deleteRollingPicture" parameterClass="String">
+		delete from rollingpicture where id = #id#
+	</delete>
+
+</sqlMap>  

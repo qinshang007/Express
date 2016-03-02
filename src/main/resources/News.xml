@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap>
+	<typeAlias alias="news" type="com.express.bean.News" />
+	<typeAlias alias="newsQuery" type="com.express.query.NewsQuery" />
+
+	<!-- 根据newsid获得新闻 -->
+	<select id="getByNewsId" parameterClass="String"
+		resultClass="news">
+		select * from news where newsid = #newsid# 
+	</select>
+
+	<!-- 根据newstype获得新闻列表 -->
+	<select id="getNewsListByNewsType" parameterClass="int"
+		resultClass="news">
+		select * from news where newstype = #newstype# order by crtime desc
+	</select>
+	
+	<!-- 根据newstype和subtype获得新闻列表 -->
+	<select id="getNewsListByNewsTypeAndSubType" parameterClass="newsQuery"
+		resultClass="news">
+		select * from news where newstype = #newstype# and subtype = #subtype# order by crtime desc
+	</select>
+
+	<insert id="addNews" parameterClass="news">
+		insert into news (newsid,title,content,crtime,newstype,subtype,del) values(#newsid#,#title#,#content#,#crtime#,#newstype#,#subtype#,#del#)
+		<selectKey resultClass="String" keyProperty="newsid">  
+  		 	 SELECT @@IDENTITY as newsid  
+ 		 </selectKey> 
+	</insert>
+
+	<update id="updateNews" parameterClass="news">
+		update news set title=#title#,content=#content#,crtime=#crtime#, newstype=#newstype#, subtype=#subtype#,del=#del# where newsid=#newsid#
+	</update>
+	
+	<delete id="deleteNews" parameterClass="String">
+		delete from news where newsid = #newsid#
+	</delete>
+
+</sqlMap>  
